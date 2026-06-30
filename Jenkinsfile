@@ -38,5 +38,6 @@ pipeline {
        steps {
          sh 'terraform destory -auto-approve'
        }
+      }
     }
 }
