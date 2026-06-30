@@ -186,6 +186,75 @@ Store AWS Access Key and Secret Key securely in Jenkins:
 **Manage Jenkins → Manage Credentials**
 
 ---
+## 🔑 Step 5 – Configure GitHub SSH Authentication & Clone Repository
+
+To securely connect your local machine or Jenkins server with GitHub, configure SSH authentication.
+
+Create a Github Repo with README file in the Github
+Ex: Jenkins-CI-CD-with-Terraform-on-AWS
+
+### 1. Generate an SSH Key
+
+If you don't already have an SSH key, generate one using:
+
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+Press **Enter** to save the key in the default location:
+
+```text
+~/.ssh/id_ed25519
+```
+
+
+### 2. Start the SSH Agent
+
+Start the SSH agent:
+
+```bash
+eval "$(ssh-agent -s)"
+```
+
+Add your private key to the SSH agent:
+
+```bash
+ssh-add ~/.ssh/id_ed25519
+```
+
+
+### 3. Add the Public Key to GitHub
+
+Display the public key:
+
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+Copy the output and navigate to:
+
+**GitHub → Settings → SSH and GPG Keys → New SSH Key**
+
+Paste the copied key and click **Add SSH Key**.
+
+
+### 4. Clone the GitHub Repository
+
+Once the SSH key has been added successfully, clone the repository using the SSH URL:
+
+```bash
+git clone git@github.com:ms-aravind/Jenkins-CI-CD-with-Terraform-on-AWS.git
+```
+
+Navigate into the project directory:
+
+```bash
+cd Jenkins-CI-CD-with-Terraform-on-AWS
+```
+
+Your local machine is now securely connected to GitHub using SSH authentication.
+
+---
 
 # 🏗️ Step 5 – Create Terraform Configuration
 
@@ -228,7 +297,8 @@ Create a **Pipeline Job** in Jenkins and configure it to use the project's `Jenk
 
 Pipeline stages:
 
-* Checkout Source Code
+* Checkout Source Code from SCM
+* Pipeline script from SCM -> Git -> Give Repo URL -> Branch Specifier (*/main)
 * Terraform Init
 * Terraform Validate
 * Terraform Plan
@@ -351,7 +421,7 @@ By completing this project, I gained hands-on experience in:
 
 # 👨‍💻 Author
 
-**Sai M**
+**Sai Aravind M.**
 
 AWS DevOps Engineer | Terraform | Jenkins | Docker | Kubernetes | AWS | CI/CD | Infrastructure as Code
 
